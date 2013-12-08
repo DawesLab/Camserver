@@ -46,7 +46,7 @@ while retries_left:
             #reply = client.recv()
             if len(data_array) == 0:
                 break
-            if len(data_array) == 4:  # TODO test for the right size array
+            if len(data_array) > 1:  # TODO test for the right size array
                 print "I: Server replied OK (%s)" % len(data_array)
                 retries_left = REQUEST_RETRIES
                 expect_reply = False

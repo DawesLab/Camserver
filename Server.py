@@ -4,6 +4,13 @@
 import zmq
 import time
 import numpy
+import sys
+
+sys.path.append("/home/photon/code/PythonForPicam")
+
+from pypicam import *
+ccdcam = PyPICAM()
+ccdcam.configure_camera()
 
 
 def send_array(socket, A, flags=0, copy=False, track=False):
@@ -27,16 +34,19 @@ while True:
         message = server.recv()
         print "Received request: ", message
 
-        # sleep for a time (simulate shots collected)
-        time.sleep(float(message))
+        # collect message number of shots (TODO verify message is int)
+        ccdcam.acquire(N=int(message))
 
         # Send reply
+        data = ccdcam.get_data()
 
         #server.send(message)  # this will be the data message
-        send_array(server, test_array)
+        send_array(server, data)
     except KeyboardInterrupt:
         print "W: interrupt received, ending service"
         break
 
 server.close()
 context.term()
+Picam_UninitializeLibrary()
+print "W: server closed, and PICAM unloaded."

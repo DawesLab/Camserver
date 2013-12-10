@@ -8,6 +8,7 @@ import sys
 
 sys.path.append("/home/photon/code/PythonForPicam")
 
+print "Initializing PICAM library..."
 from pypicam import *
 ccdcam = PyPICAM()
 ccdcam.configure_camera()

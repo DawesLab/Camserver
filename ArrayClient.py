@@ -3,6 +3,7 @@
 
 import zmq
 import numpy
+from pylab import plot, show
 
 #TODO handle keyboard interrupt correctly
 
@@ -50,6 +51,8 @@ while retries_left:
                 print "I: Server replied OK (%s)" % len(data_array)
                 retries_left = REQUEST_RETRIES
                 expect_reply = False
+                plot(data_array[200,:,0])
+                show()
             else:
                 # print "E: Malformed reply from server: %s" % reply
                 print "E: no reply from server"

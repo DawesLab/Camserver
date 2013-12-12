@@ -29,7 +29,6 @@ server = context.socket(zmq.REP)
 
 server.bind("tcp://*:5555")
 
-test_array = numpy.array([1, 2, 3, 4])
 while True:
     try:
         message = server.recv()
@@ -39,7 +38,7 @@ while True:
         ccdcam.acquire(N=int(message))
 
         # Send reply
-        data = ccdcam.get_data()
+        data = ccdcam.get_all_data()
 
         #server.send(message)  # this will be the data message
         send_array(server, data)
@@ -49,5 +48,5 @@ while True:
 
 server.close()
 context.term()
-Picam_UninitializeLibrary()
+ccdcam.close()
 print "W: server closed, and PICAM unloaded."

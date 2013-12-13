@@ -34,14 +34,18 @@ while True:
         message = server.recv()
         print "Received request: ", message
 
-        # collect message number of shots (TODO verify message is int)
-        ccdcam.acquire(N=int(message))
+        # collect message number of shots
+        shots = int(message)
+        if shots > 0 and shots < 100:
+            ccdcam.acquire(N=shots)
 
-        # Send reply
-        data = ccdcam.get_all_data()
+            # Send reply
+            data = ccdcam.get_all_data()
 
-        #server.send(message)  # this will be the data message
-        send_array(server, data)
+            #server.send(message)  # this will be the data message
+            send_array(server, data)
+        else:
+            print "W: Request out of range (0 < N < 100)"
     except KeyboardInterrupt:
         print "W: interrupt received, ending service"
         break

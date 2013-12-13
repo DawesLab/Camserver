@@ -44,18 +44,12 @@ while retries_left:
         socks = dict(poll.poll(REQUEST_TIMEOUT))
         if socks.get(client) == zmq.POLLIN:
             data_array = recv_array(client)
-            #reply = client.recv()
-            if len(data_array) == 0:
-                break
-            if len(data_array) > 1:  # TODO test for the right size array
-                print "I: Server replied OK (%s)" % len(data_array)
-                retries_left = REQUEST_RETRIES
-                expect_reply = False
-                plot(data_array[200,:,0])
-                show()
-            else:
-                # print "E: Malformed reply from server: %s" % reply
-                print "E: no reply from server"
+
+            print "I: Server replied OK (%s)" % len(data_array)
+            retries_left = REQUEST_RETRIES
+            expect_reply = False
+            plot(data_array[200,:,0])
+            show()
 
         else:
             print "W: No response from server, retrying..."

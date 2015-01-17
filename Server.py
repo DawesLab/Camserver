@@ -12,6 +12,7 @@ print "Initializing PICAM library..."
 from pypicam import *
 ccdcam = PyPICAM()
 ccdcam.configure_camera()
+ccdcam.get_temp()
 
 
 def send_array(socket, A, flags=0, copy=False, track=False):

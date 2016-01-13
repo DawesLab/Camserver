@@ -8,7 +8,7 @@ import sys
 
 sys.path.append("/home/photon/code/PythonForPicam")
 
-print "Initializing PICAM library..."
+print("Initializing PICAM library...")
 from pypicam import *
 ccdcam = PyPICAM()
 ccdcam.configure_camera(roi=[340,210,600,10,1,1])
@@ -33,7 +33,7 @@ server.bind("tcp://*:5555")
 while True:
     try:
         message = server.recv()
-        print "Received request: ", message
+        print("Received request: ", message)
 
         # collect message number of shots
         shots = int(message)
@@ -46,12 +46,12 @@ while True:
             #server.send(message)  # this will be the data message
             send_array(server, data)
         else:
-            print "W: Request out of range (0 < N <= 100)"
+            print("W: Request out of range (0 < N <= 100)")
     except KeyboardInterrupt:
-        print "W: interrupt received, ending service"
+        print("W: interrupt received, ending service")
         break
 
 server.close()
 context.term()
 ccdcam.close()
-print "W: server closed, and PICAM unloaded."
+print("W: server closed, and PICAM unloaded.")
